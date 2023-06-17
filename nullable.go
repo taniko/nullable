@@ -33,6 +33,9 @@ func (t Nullable[T]) Value() T {
 }
 
 func (t Nullable[T]) MarshalJSON() ([]byte, error) {
+	if t.IsNull() {
+		return json.Marshal(nil)
+	}
 	return json.Marshal(t.Value())
 }
 

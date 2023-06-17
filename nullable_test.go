@@ -52,6 +52,14 @@ func TestNullable_MarshalJSON(t *testing.T) {
 	actualBytes, err := json.Marshal(actual)
 	assert.NoError(t, err)
 	assert.Equal(t, expectedBytes, actualBytes)
+
+	actualBytes, err = json.Marshal(struct {
+		Int Nullable[int] `json:"int"`
+	}{
+		Int: Nullable[int]{},
+	})
+	assert.NoError(t, err)
+	assert.Equal(t, `{"int":null}`, string(actualBytes))
 }
 
 func TestNullable_UnmarshalJSON(t *testing.T) {
